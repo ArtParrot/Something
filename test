@@ -1,0 +1,59 @@
+#include<iostream>
+#include<algorithm>
+#include<cstdio>
+using namespace std;
+ 
+int min_num, min_sub;
+int n, m, p1, s1, s2;
+int i;
+int c[100010];
+ 
+int check_power(bool left) {
+    int i;
+    int sum = 0;
+    if (left) {
+        for (i = 1; i != m; ++i) {
+            sum += c[i] * (m - i);
+        }
+    }
+    else {
+        for (i = n; i != m; --i) {
+            sum += c[i] * (i - m);
+        }
+    }
+    return sum;
+}
+ 
+int main() {
+    cin >> n;
+    for (i = 1; i <= n; i++) {
+        cin >> c[i];
+    }
+    cin >> m >> p1 >> s1 >> s2;
+    c[p1] += s1;
+    for (i = 1; i <= n; ++i) {
+        c[i] += s2;
+        int num = abs(check_power(true) - check_power(false));      
+        if (i == 1) {
+            min_num = num;
+            min_sub = i;
+        }
+        else {
+            if (min_num > num) {
+                min_num = num;
+                min_sub = i;
+            }
+        }
+        c[i] -= s2;
+            
+    }   
+    cout << min_sub << endl;
+     
+    return 0;
+}
+/**************************************************************
+    Problem: 2095
+    User: shishunjie
+    Language: C++
+    Result: 时间超限
+****************************************************************/
